@@ -10,8 +10,7 @@
  */
 
 class Solution {
-
-    public ListNode findmid(ListNode head) {
+    public boolean isPalindrome(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
 
@@ -20,39 +19,25 @@ class Solution {
             fast = fast.next.next;
         }
 
-        return slow;
-    }
-
-    public boolean isPalindrome(ListNode head) {
-
-        if (head == null || head.next == null) {
-            return true;
-        }
-
-        ListNode curr = findmid(head);
         ListNode prev = null;
-        ListNode next;
-
-        while (curr != null) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
+        while (slow != null) {
+            ListNode next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;
         }
 
-        ListNode righthead = prev;
-        ListNode lefthead = head;
+        ListNode first = head;
+        ListNode second = prev;
 
-        while (righthead != null) {
-            if (lefthead.val != righthead.val) {
+        while (second != null) {
+            if (first.val != second.val) {
                 return false;
             }
-
-            lefthead = lefthead.next;
-            righthead = righthead.next;
+            first = first.next;
+            second = second.next;
         }
 
         return true;
     }
 }
-
